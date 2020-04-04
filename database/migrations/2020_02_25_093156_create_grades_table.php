@@ -15,10 +15,10 @@ class CreateGradesTable extends Migration
     {
         Schema::create('grades', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('subject_type');
-            $table->double('grade',5,2)->nullable();
             $table->unsignedBigInteger('subject_id')->nullable();
             $table->unsignedBigInteger('student_id')->nullable();
+            $table->string('subject_type');
+            $table->double('grade',5,2)->nullable();
             $table->timestamps();
         });
     }

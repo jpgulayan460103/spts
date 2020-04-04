@@ -15,20 +15,20 @@ class CreateSubjectsTable extends Migration
     {
         Schema::create('subjects', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('school_year');
-            $table->string('offer_code');
-            $table->string('subject_code');
+            $table->unsignedBigInteger('track_id')->nullable();
+            $table->unsignedBigInteger('quarter_id')->nullable();
+            $table->unsignedBigInteger('semester_id')->nullable();
+            $table->unsignedBigInteger('teacher_id')->nullable();
             $table->string('subject_description');
+            $table->string('offer_code');
+            $table->string('school_year');
+            $table->string('subject_code');
             $table->string('grade_level');
             $table->string('section_adviser');
             $table->string('section_name');
             $table->string('section_strand');
             $table->string('room_number');
             $table->string('subject_coordinator');
-            $table->unsignedBigInteger('track_id')->nullable();
-            $table->unsignedBigInteger('quarter_id')->nullable();
-            $table->unsignedBigInteger('semester_id')->nullable();
-            $table->unsignedBigInteger('teacher_id')->nullable();
             $table->timestamps();
         });
     }

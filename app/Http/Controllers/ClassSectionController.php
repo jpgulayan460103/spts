@@ -2,25 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Student;
+use App\Models\ClassSection;
 use Illuminate\Http\Request;
-use App\Http\Requests\StudentCreateRequest;
-use App\Transformers\StudentTransformer;
+use App\Http\Requests\ClassSectionCreateRequest;
+use App\Transformers\ClassSectionTransformer;
 
-class StudentController extends Controller
+class ClassSectionController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $students = Student::paginate(30);
-        // $students = Student::find(1);
-        // return $students->class_section;
+        $class_sections = ClassSection::paginate(20);
+        if($request->dropdown){
+            $class_sections = ClassSection::all();
+        }
         return [
-            'students' => fractal($students, new StudentTransformer)->toArray()
+            'class_sections' => fractal($class_sections, new ClassSectionTransformer)->toArray()
         ];
     }
 
@@ -40,21 +41,21 @@ class StudentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StudentCreateRequest $request)
+    public function store(ClassSectionCreateRequest $request)
     {
-        $student = Student::create($request->all());
+        $class_section =  ClassSection::create($request->all());
         return [
-            'students' => fractal($student, new StudentTransformer)->toArray()
+            'class_sections' => fractal($class_section, new ClassSectionTransformer)->toArray()
         ];
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Student  $student
+     * @param  \App\Models\ClassSection  $classSection
      * @return \Illuminate\Http\Response
      */
-    public function show(Student $student)
+    public function show(ClassSection $classSection)
     {
         //
     }
@@ -62,10 +63,10 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Student  $student
+     * @param  \App\Models\ClassSection  $classSection
      * @return \Illuminate\Http\Response
      */
-    public function edit(Student $student)
+    public function edit(ClassSection $classSection)
     {
         //
     }
@@ -74,10 +75,10 @@ class StudentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Student  $student
+     * @param  \App\Models\ClassSection  $classSection
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, ClassSection $classSection)
     {
         //
     }
@@ -85,10 +86,10 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Student  $student
+     * @param  \App\Models\ClassSection  $classSection
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Student $student)
+    public function destroy(ClassSection $classSection)
     {
         //
     }

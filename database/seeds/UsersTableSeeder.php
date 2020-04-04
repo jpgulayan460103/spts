@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'admin',
                 'username' => 'admin',
-                'password' => bcrypt('admin'),
+                'password' => 'admin',
             ]
         ];
         foreach ($users as $user) {

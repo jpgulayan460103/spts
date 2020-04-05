@@ -18,4 +18,12 @@ class ClassSection extends Model
     {
         return $this->belongsTo('App\Models\Track');
     }
+    public function students()
+    {
+        // return $this->hasMany('App\Models\SectionStudent');
+        return $this->hasMany('App\Models\SectionStudent')
+            ->join('students','students.id','=','section_students.student_id')
+            ->select('section_students.*')
+            ->orderBy('students.full_name_last');
+    }
 }

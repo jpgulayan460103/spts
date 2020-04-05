@@ -36,6 +36,7 @@ Route::group($route_params, function () {
         Route::get('/', 'ClassSectionController@index')->name('api.class-sections.index');
         Route::post('/', 'ClassSectionController@store')->name('api.class-sections.store');
         Route::get('/{id}', 'ClassSectionController@show')->name('api.class-sections.show');
+        Route::get('/{id}/students', 'ClassSectionController@listStudents')->name('api.class-sections.list.students');
         Route::put('/{id}', 'ClassSectionController@update')->name('api.class-sections.update');
         Route::delete('/{id}', 'ClassSectionController@destroy')->name('api.class-sections.destroy');
     });

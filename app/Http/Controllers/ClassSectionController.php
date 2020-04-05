@@ -6,6 +6,7 @@ use App\Models\ClassSection;
 use Illuminate\Http\Request;
 use App\Http\Requests\ClassSectionCreateRequest;
 use App\Transformers\ClassSectionTransformer;
+use App\Transformers\SectionStudentTransformer;
 use App\Repositories\ClassSection\ClassSectionRepository;
 
 
@@ -95,5 +96,15 @@ class ClassSectionController extends Controller
     public function destroy(ClassSection $class_section, $id)
     {
         $class_section->findOrFail($id)->delete();
+    }
+
+    public function listStudents($id)
+    {
+        $class_sections = ClassSection::find($id);
+        // return $class_sections->students;
+        // $class_sections->students = $class_sections->students()->get();
+        return [
+            'class_sections' => fractal($class_sections, new ClassSectionTransformer)->parseIncludes('students.student')->toArray()
+        ];
     }
 }

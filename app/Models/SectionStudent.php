@@ -12,7 +12,7 @@ class SectionStudent extends Model
     ];
     public function student()
     {
-        return $this->belongsTo('App\Models\Student');
+        return $this->belongsTo('App\Models\Student')->orderBy('full_name_last');
     }
     public function class_section()
     {

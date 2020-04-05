@@ -13,7 +13,7 @@ class StudentTransformer extends TransformerAbstract
      * @var array
      */
     protected $defaultIncludes = [
-        'class_sections'
+        //
     ];
     
     /**

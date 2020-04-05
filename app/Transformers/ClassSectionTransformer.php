@@ -4,6 +4,7 @@ namespace App\Transformers;
 
 use League\Fractal\TransformerAbstract;
 use App\Transformers\TrackTransformer;
+use App\Transformers\SectionStudentTransformer;
 
 class ClassSectionTransformer extends TransformerAbstract
 {
@@ -22,7 +23,7 @@ class ClassSectionTransformer extends TransformerAbstract
      * @var array
      */
     protected $availableIncludes = [
-        //
+        'students'
     ];
     
     /**
@@ -45,5 +46,9 @@ class ClassSectionTransformer extends TransformerAbstract
     public function includeTrack($table)
     {
         return $this->item($table->track, new TrackTransformer);
+    }
+    public function includeStudents($table)
+    {
+        return $this->collection($table->students, new SectionStudentTransformer);
     }
 }

@@ -11,8 +11,8 @@ class Subject extends Model
         'quarter_id',
         'semester_id',
         'teacher_id',
+        'subject_category_id',
         'subject_description',
-        'school_year',
         'offer_code',
         'subject_code',
         'grade_level',
@@ -38,6 +38,10 @@ class Subject extends Model
     public function teacher()
     {
         return $this->belongsTo('App\Models\Teacher');
+    }
+    public function subject_category()
+    {
+        return $this->belongsTo('App\Models\SubjectCategory');
     }
     
 }

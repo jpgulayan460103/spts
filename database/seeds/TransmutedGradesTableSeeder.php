@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\TransmutedGrade;
+use App\Models\TransmutedGrade;
 
 class TransmutedGradesTableSeeder extends Seeder
 {

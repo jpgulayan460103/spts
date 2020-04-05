@@ -6,6 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
+    public static function boot() {
+        parent::boot();
+    
+        static::creating(function (Student $item) {
+            $item->full_name_first = "$item->first_name $item->middle_name $item->last_name $item->ext_name";
+            $item->full_name_last = "$item->last_name, $item->first_name $item->middle_name $item->ext_name";
+        });
+    
+        static::updating(function (Student $item) {
+            $item->full_name_first = "$item->first_name $item->middle_name $item->last_name $item->ext_name";
+            $item->full_name_last = "$item->last_name, $item->first_name $item->middle_name $item->ext_name";
+        });
+    }
     protected $fillable = [
         'student_id_number',
         'first_name',
@@ -15,12 +28,11 @@ class Student extends Model
         'gender',
         'guardian_name',
         'guardian_contact_number',
-        'class_section_id',
         'user_id',
     ];
 
-    public function class_section()
+    public function class_sections()
     {
-        return $this->belongsTo('App\Models\ClassSection');
+        return $this->hasMany('App\Models\SectionStudent');
     }
 }

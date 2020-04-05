@@ -13,7 +13,7 @@ class StudentTransformer extends TransformerAbstract
      * @var array
      */
     protected $defaultIncludes = [
-        'class_section'
+        'class_sections'
     ];
     
     /**
@@ -35,6 +35,8 @@ class StudentTransformer extends TransformerAbstract
         return [
             'id' => $table->id,
             'student_id_number' => $table->student_id_number,
+            'full_name_last' => $table->full_name_last,
+            'full_name_first' => $table->full_name_first,
             'first_name' => $table->first_name,
             'middle_name' => $table->middle_name,
             'last_name' => $table->last_name,
@@ -42,15 +44,14 @@ class StudentTransformer extends TransformerAbstract
             'gender' => $table->gender,
             'guardian_name' => $table->guardian_name,
             'guardian_contact_number' => $table->guardian_contact_number,
-            'class_section_id' => $table->class_section_id,
             'user_id' => $table->user_id,
         ];
     }
 
-    public function includeClassSection($table)
+    public function includeClassSections($table)
     {
-        if($table->class_section){
-            return $this->item($table->class_section, new ClassSectionTransformer);
+        if($table->class_sections){
+            return $this->collection($table->class_sections, new ClassSectionTransformer);
         }
     }
 }

@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Quarter;
+use App\Models\GradingSystem;
 use Illuminate\Http\Request;
-use App\Transformers\QuarterTransformer;
 
-class QuarterController extends Controller
+class GradingSystemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +14,7 @@ class QuarterController extends Controller
      */
     public function index()
     {
-        $quarters = Quarter::all();
-        return [
-            'quarters' => fractal($quarters, new QuarterTransformer)->toArray()
-        ];
+        //
     }
 
     /**
@@ -45,10 +41,10 @@ class QuarterController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Quarter  $quarter
+     * @param  \App\Models\GradingSystem  $gradingSystem
      * @return \Illuminate\Http\Response
      */
-    public function show(Quarter $quarter)
+    public function show(GradingSystem $gradingSystem)
     {
         //
     }
@@ -56,10 +52,10 @@ class QuarterController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Quarter  $quarter
+     * @param  \App\Models\GradingSystem  $gradingSystem
      * @return \Illuminate\Http\Response
      */
-    public function edit(Quarter $quarter)
+    public function edit(GradingSystem $gradingSystem)
     {
         //
     }
@@ -68,10 +64,10 @@ class QuarterController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Quarter  $quarter
+     * @param  \App\Models\GradingSystem  $gradingSystem
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Quarter $quarter)
+    public function update(Request $request, GradingSystem $gradingSystem)
     {
         //
     }
@@ -79,10 +75,10 @@ class QuarterController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Quarter  $quarter
+     * @param  \App\Models\GradingSystem  $gradingSystem
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Quarter $quarter)
+    public function destroy(GradingSystem $gradingSystem)
     {
         //
     }

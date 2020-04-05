@@ -16,6 +16,8 @@ class CreateStudentsTable extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('student_id_number')->unique()->nullable();
+            $table->string('full_name_first')->nullable();
+            $table->string('full_name_last')->nullable();
             $table->string('first_name')->nullable();
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();
@@ -25,6 +27,7 @@ class CreateStudentsTable extends Migration
             $table->string('guardian_contact_number')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
+            $table->index(['full_name_first', 'full_name_last']);
         });
     }
 

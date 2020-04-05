@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Subject;
+use App\Models\Subject;
 use Illuminate\Http\Request;
+use App\Transformers\SubjectTransformer;
+use App\Repositories\Subject\SubjectRepository;
 
 class SubjectController extends Controller
 {
@@ -14,7 +16,10 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        //
+        $subjects = (new SubjectRepository)->getList();
+        return [
+            'subjects' => fractal($subjects, new SubjectTransformer)->toArray()
+        ];
     }
 
     /**
@@ -33,9 +38,12 @@ class SubjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SubjectCreateRequest $request)
     {
-        //
+        $subject = Subject::create($request->all());
+        return [
+            'subjects' => fractal($subject, new SubjectTransformer)->toArray()
+        ];
     }
 
     /**
@@ -67,9 +75,13 @@ class SubjectController extends Controller
      * @param  \App\Subject  $subject
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Subject $subject)
+    public function update(SubjectUpdateRequest $request, Subject $subject, $id)
     {
-        //
+        $subject = $subject->findOrFail($id);
+        $subject->update($request->all());
+        return [
+            'subjects' => fractal($subject, new SubjectTransformer)->toArray()
+        ];
     }
 
     /**
@@ -78,8 +90,8 @@ class SubjectController extends Controller
      * @param  \App\Subject  $subject
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Subject $subject)
+    public function destroy(Subject $subject, $id)
     {
-        //
+        $subject->findOrFail($id)->delete();
     }
 }

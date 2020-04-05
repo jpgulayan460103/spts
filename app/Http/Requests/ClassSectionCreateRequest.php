@@ -24,8 +24,9 @@ class ClassSectionCreateRequest extends FormRequest
     public function rules()
     {
         return [
+            'school_year' => 'required|max:191',
             'section_name' => 'required|max:191',
-            'section_strand' => 'required|max:191',
+            'track_id' => 'required|max:191',
             'section_adviser' => 'required|max:191',
             'grade_level' => 'required|max:191',
         ];

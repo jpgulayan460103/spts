@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Track;
+use App\Models\Track;
 use Illuminate\Http\Request;
+use App\Transformers\TrackTransformer;
 
 class TrackController extends Controller
 {
@@ -14,7 +15,10 @@ class TrackController extends Controller
      */
     public function index()
     {
-        //
+        $tracks = Track::all();
+        return [
+            'tracks' => fractal($tracks, new TrackTransformer)->toArray()
+        ];
     }
 
     /**

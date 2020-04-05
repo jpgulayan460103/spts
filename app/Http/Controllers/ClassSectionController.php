@@ -6,6 +6,8 @@ use App\Models\ClassSection;
 use Illuminate\Http\Request;
 use App\Http\Requests\ClassSectionCreateRequest;
 use App\Transformers\ClassSectionTransformer;
+use App\Repositories\ClassSection\ClassSectionRepository;
+
 
 class ClassSectionController extends Controller
 {
@@ -16,10 +18,7 @@ class ClassSectionController extends Controller
      */
     public function index(Request $request)
     {
-        $class_sections = ClassSection::paginate(20);
-        if($request->dropdown){
-            $class_sections = ClassSection::all();
-        }
+        $class_sections = (new ClassSectionRepository)->getList();
         return [
             'class_sections' => fractal($class_sections, new ClassSectionTransformer)->toArray()
         ];
@@ -78,9 +77,13 @@ class ClassSectionController extends Controller
      * @param  \App\Models\ClassSection  $classSection
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ClassSection $classSection)
+    public function update(ClassSectionCreateRequest $request, ClassSection $class_section, $id)
     {
-        //
+        $class_section = $class_section->findOrFail($id);
+        $class_section->update($request->all());
+        return [
+            'class_sections' => fractal($class_section, new ClassSectionTransformer)->toArray()
+        ];
     }
 
     /**
@@ -89,8 +92,8 @@ class ClassSectionController extends Controller
      * @param  \App\Models\ClassSection  $classSection
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ClassSection $classSection)
+    public function destroy(ClassSection $class_section, $id)
     {
-        //
+        $class_section->findOrFail($id)->delete();
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTracksTable extends Migration
+class CreateGradingSystemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateTracksTable extends Migration
      */
     public function up()
     {
-        Schema::create('tracks', function (Blueprint $table) {
+        Schema::create('grading_systems', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('category')->nullable();
+            $table->double('grading_system',5,2)->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateTracksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tracks');
+        Schema::dropIfExists('grading_systems');
     }
 }

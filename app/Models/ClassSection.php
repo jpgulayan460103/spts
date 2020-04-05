@@ -8,8 +8,14 @@ class ClassSection extends Model
 {
     protected $fillable = [
         'section_name',
-        'section_strand',
+        'track_id',
         'section_adviser',
         'grade_level',
+        'school_year',
     ];
+
+    public function track()
+    {
+        return $this->belongsTo('App\Models\Track');
+    }
 }

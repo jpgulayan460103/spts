@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Teacher;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
+use App\Transformers\TeacherTransformer;
 
 class TeacherController extends Controller
 {
@@ -14,7 +15,10 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        //
+        $teachers = Teacher::all();
+        return [
+            'teachers' => fractal($teachers, new TeacherTransformer)->toArray()
+        ];
     }
 
     /**

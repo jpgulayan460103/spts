@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Http\Requests\StudentCreateRequest;
+use App\Http\Requests\StudentUpdateRequest;
 use App\Transformers\StudentTransformer;
+use App\Repositories\Student\StudentRepository;
 
 class StudentController extends Controller
 {
@@ -16,9 +18,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::paginate(30);
-        // $students = Student::find(1);
-        // return $students->class_section;
+        $students = (new StudentRepository)->getList();
         return [
             'students' => fractal($students, new StudentTransformer)->toArray()
         ];
@@ -77,9 +77,13 @@ class StudentController extends Controller
      * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Student $student)
+    public function update(StudentUpdateRequest $request, Student $student, $id)
     {
-        //
+        $student = $student->findOrFail($id);
+        $student->update($request->all());
+        return [
+            'students' => fractal($student, new StudentTransformer)->toArray()
+        ];
     }
 
     /**
@@ -88,8 +92,8 @@ class StudentController extends Controller
      * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Student $student)
+    public function destroy(Student $student, $id)
     {
-        //
+        $student->findOrFail($id)->delete();
     }
 }

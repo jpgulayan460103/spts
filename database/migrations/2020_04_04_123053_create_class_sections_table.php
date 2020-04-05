@@ -16,14 +16,12 @@ class CreateClassSectionsTable extends Migration
         Schema::create('class_sections', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('section_name');
-            $table->string('section_strand');
+            $table->string('school_year');
+            $table->unsignedBigInteger('track_id')->nullable();
             $table->string('section_adviser');
             $table->string('grade_level');
             $table->timestamps();
-        });
-        Schema::table('students', function (Blueprint $table) {
-            $table->unsignedBigInteger('class_section_id')->nullable();
-            $table->foreign('class_section_id')->references('id')->on('class_sections')->onDelete('cascade');
+            $table->foreign('track_id')->references('id')->on('tracks')->onDelete('cascade');
         });
     }
 

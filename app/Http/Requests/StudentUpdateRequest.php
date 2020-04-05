@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\NameRule;
 
-class StudentCreateRequest extends FormRequest
+class StudentUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,6 +24,7 @@ class StudentCreateRequest extends FormRequest
      */
     public function rules()
     {
+        $id = request('id');
         return [
             'last_name' => ['required','max:191', new NameRule],
             'first_name' => ['required','max:191', new NameRule],
@@ -32,7 +33,7 @@ class StudentCreateRequest extends FormRequest
             'gender' => ['required','max:191', new NameRule],
             'guardian_name' => ['max:191', new NameRule],
             'guardian_contact_number' => ['max:191', new NameRule],
-            'student_id_number' => ['required','unique:students,student_id_number']
+            'student_id_number' => ['required',"unique:students,student_id_number,$id"]
         ];
     }
 

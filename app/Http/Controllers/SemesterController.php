@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Semester;
+use App\Models\Semester;
 use Illuminate\Http\Request;
+use App\Transformers\SemesterTransformer;
 
 class SemesterController extends Controller
 {
@@ -14,7 +15,10 @@ class SemesterController extends Controller
      */
     public function index()
     {
-        //
+        $semesters = Semester::all();
+        return [
+            'semesters' => fractal($semesters, new SemesterTransformer)->toArray()
+        ];
     }
 
     /**

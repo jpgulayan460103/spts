@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Quarter;
+use App\Models\Quarter;
 
 class QuartersTableSeeder extends Seeder
 {
@@ -15,8 +15,6 @@ class QuartersTableSeeder extends Seeder
         $quarters = [
             ['name' => 'First Quarter'],
             ['name' => 'Second Quarter'],
-            ['name' => 'Third Quarter'],
-            ['name' => 'Fourth Quarter'],
         ];
         foreach ($quarters as $quarter) {
             $created_quarter = Quarter::create($quarter);

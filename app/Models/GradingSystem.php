@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Track extends Model
+class GradingSystem extends Model
 {
     protected $fillable = [
-        'name',
+        'type',
+        'category',
+        'grading_system',
     ];
 }

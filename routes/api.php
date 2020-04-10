@@ -25,6 +25,13 @@ if(config('app.env') == "production"){
     $route_params = [];
 }
 Route::group($route_params, function () {
+    Route::group(['prefix' => '/users'], function () {
+        Route::get('/', 'UserController@index')->name('api.users.index');
+        Route::post('/', 'UserController@store')->name('api.users.store');
+        Route::get('/{id}', 'UserController@show')->name('api.users.show');
+        Route::put('/{id}', 'UserController@update')->name('api.users.update');
+        Route::delete('/{id}', 'UserController@destroy')->name('api.users.destroy');
+    });
     Route::group(['prefix' => '/students'], function () {
         Route::get('/', 'StudentController@index')->name('api.students.index');
         Route::post('/', 'StudentController@store')->name('api.students.store');
@@ -36,7 +43,9 @@ Route::group($route_params, function () {
         Route::get('/', 'ClassSectionController@index')->name('api.class-sections.index');
         Route::post('/', 'ClassSectionController@store')->name('api.class-sections.store');
         Route::get('/{id}', 'ClassSectionController@show')->name('api.class-sections.show');
-        Route::get('/{id}/students', 'ClassSectionController@listStudents')->name('api.class-sections.list.students');
+        Route::get('/{id}/students', 'ClassSectionController@listStudents')->name('api.class-sections.students.list');
+        Route::post('/{section_class_id}/students', 'ClassSectionController@addStudent')->name('api.class-sections.students.add');
+        Route::put('/{section_class_id}/students/{id}', 'ClassSectionController@removeStudent')->name('api.class-sections.students.remove');
         Route::put('/{id}', 'ClassSectionController@update')->name('api.class-sections.update');
         Route::delete('/{id}', 'ClassSectionController@destroy')->name('api.class-sections.destroy');
     });

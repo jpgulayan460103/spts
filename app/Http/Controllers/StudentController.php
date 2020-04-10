@@ -8,6 +8,7 @@ use App\Http\Requests\StudentCreateRequest;
 use App\Http\Requests\StudentUpdateRequest;
 use App\Transformers\StudentTransformer;
 use App\Repositories\Student\StudentRepository;
+use Spatie\Permission\Models\Role;
 
 class StudentController extends Controller
 {

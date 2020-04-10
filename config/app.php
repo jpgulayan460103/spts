@@ -175,6 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Spatie\Fractal\FractalServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class
 
     ],
 

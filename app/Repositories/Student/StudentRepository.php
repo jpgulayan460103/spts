@@ -35,4 +35,9 @@ class StudentRepository
         $this->query = $this->query->paginate($this->defaultPaginate);
         return $this->query;
     }
+
+    public function createUser(Student $student)
+    {
+        // $user->assignRole('writer');
+    }
 }

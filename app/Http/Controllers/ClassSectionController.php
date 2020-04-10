@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ClassSection;
+use App\Models\SectionStudent;
 use Illuminate\Http\Request;
 use App\Http\Requests\ClassSectionCreateRequest;
 use App\Transformers\ClassSectionTransformer;
@@ -101,10 +102,32 @@ class ClassSectionController extends Controller
     public function listStudents($id)
     {
         $class_sections = ClassSection::find($id);
-        // return $class_sections->students;
-        // $class_sections->students = $class_sections->students()->get();
         return [
             'class_sections' => fractal($class_sections, new ClassSectionTransformer)->parseIncludes('students.student')->toArray()
         ];
+    }
+
+    public function removeStudent($class_section_id, $id)
+    {
+        SectionStudent::whereStudentId($id)->whereClassSectionId($class_section_id)->delete();
+        return $this->listStudents($class_section_id);
+    }
+    
+    public function addStudent(Request $request, $class_section_id)
+    {
+        $student_id = $request->student_id;
+        $student = SectionStudent::whereStudentId($student_id)->whereClassSectionId($class_section_id)->first();
+        if(!$student){
+            SectionStudent::create($request->all());
+        }else{
+            $response = [
+                "message" => "The given data was invalid.",
+                "errors" => [
+                    "student_id" => ["The student id has already been taken."]
+                ]
+            ];
+            return response($response, 422);
+        }
+        return $this->listStudents($class_section_id);
     }
 }

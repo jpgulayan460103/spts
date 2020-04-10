@@ -44,7 +44,6 @@ class StudentTransformer extends TransformerAbstract
             'gender' => $table->gender,
             'guardian_name' => $table->guardian_name,
             'guardian_contact_number' => $table->guardian_contact_number,
-            'user_id' => $table->user_id,
         ];
     }
 

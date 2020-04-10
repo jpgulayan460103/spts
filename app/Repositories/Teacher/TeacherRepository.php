@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repositories\Student;
+namespace App\Repositories\Teacher;
 
-use App\Models\Student;
+use App\Models\Teacher;
 
-class StudentRepository
+class TeacherRepository
 {
     public $defaultPaginate = 20;
     public $query;
@@ -17,7 +17,7 @@ class StudentRepository
     public function getList()
     {
         if (!$this->query) {
-            $this->query = Student::query();
+            $this->query = Teacher::query();
         }
         if(request()->has('query')){
             $key = request('query');
@@ -27,7 +27,7 @@ class StudentRepository
                     $query->orWhere('middle_name','like',"%$key%");
                     $query->orWhere('last_name','like',"%$key%");
                     $query->orWhere('ext_name','like',"%$key%");
-                    $query->orWhere('student_id_number','like',"%$key%");
+                    $query->orWhere('teacher_id_number','like',"%$key%");
                 });
             }
         }
@@ -36,13 +36,13 @@ class StudentRepository
         return $this->query;
     }
 
-    public function createUser(Student $student)
+    public function createUser(Teacher $teacher)
     {
-        $user = $student->user()->create([
+        $user = $teacher->user()->create([
             'name' => request('username'),
             'username' => request('username'),
             'password' => request('password')
         ]);
-        $user->assignRole('student');
+        $user->assignRole('teacher');
     }
 }

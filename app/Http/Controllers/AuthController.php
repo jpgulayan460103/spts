@@ -36,7 +36,7 @@ class AuthController extends Controller
                 'message' => 'Invalid credentials'
             ],422);
         }
-        $user = User::whereUsername('admin')->first();
+        $user = User::whereUsername($request->username)->with('roles')->first();
 
         $accessToken = $user->createToken('authToken')->accessToken;
         return response([

@@ -33,8 +33,14 @@ class TeacherTransformer extends TransformerAbstract
     {
         return [
             'id' => $table->id,
-            'name' => $table->name,
-            'user_id' => $table->user_id,
+            'teacher_id_number' => $table->teacher_id_number,
+            'full_name_last' => $table->full_name_last,
+            'full_name_first' => $table->full_name_first,
+            'first_name' => $table->first_name,
+            'middle_name' => $table->middle_name,
+            'last_name' => $table->last_name,
+            'ext_name' => $table->ext_name,
+            'gender' => $table->gender,
         ];
     }
 }

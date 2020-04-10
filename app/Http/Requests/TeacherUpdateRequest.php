@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\NameRule;
 
-class StudentCreateRequest extends FormRequest
+class TeacherUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,24 +24,21 @@ class StudentCreateRequest extends FormRequest
      */
     public function rules()
     {
+        $id = request('id');
         return [
             'last_name' => ['required','max:191', new NameRule],
             'first_name' => ['required','max:191', new NameRule],
             'middle_name' => ['required','max:191', new NameRule],
             'ext_name' => ['required','max:191', new NameRule],
             'gender' => ['required','max:191', new NameRule],
-            'guardian_name' => ['max:191', new NameRule],
-            'guardian_contact_number' => ['max:191', new NameRule],
-            'student_id_number' => ['required','unique:students,student_id_number'],
-            'username' => ['required','unique:users,username'],
-            'password' => ['required'],
+            'teacher_id_number' => ['required',"unique:teachers,teacher_id_number,$id"]
         ];
     }
 
     public function messages()
     {
         return [
-            'student_id_number.unique' => 'The student id number has been added.'
+            'teacher_id_number.unique' => 'The teacher id number has been added.'
         ];
     }
 }

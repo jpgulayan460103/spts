@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Teacher;
 use Illuminate\Http\Request;
+use App\Http\Requests\TeacherCreateRequest;
+use App\Http\Requests\TeacherUpdateRequest;
 use App\Transformers\TeacherTransformer;
+use App\Repositories\Teacher\TeacherRepository;
 
 class TeacherController extends Controller
 {
@@ -15,7 +18,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $teachers = Teacher::all();
+        $teachers = (new TeacherRepository)->getList();
         return [
             'teachers' => fractal($teachers, new TeacherTransformer)->toArray()
         ];
@@ -37,9 +40,13 @@ class TeacherController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TeacherCreateRequest $request)
     {
-        //
+        $teacher = Teacher::create($request->all());
+        (new TeacherRepository)->createUser($teacher);
+        return [
+            'teachers' => fractal($teacher, new TeacherTransformer)->toArray()
+        ];
     }
 
     /**
@@ -71,9 +78,13 @@ class TeacherController extends Controller
      * @param  \App\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Teacher $teacher)
+    public function update(TeacherUpdateRequest $request, Teacher $teacher)
     {
-        //
+        $teacher = $teacher->findOrFail($id);
+        $teacher->update($request->all());
+        return [
+            'teachers' => fractal($teacher, new TeacherTransformer)->toArray()
+        ];
     }
 
     /**

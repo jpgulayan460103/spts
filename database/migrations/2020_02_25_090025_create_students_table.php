@@ -25,7 +25,6 @@ class CreateStudentsTable extends Migration
             $table->string('gender')->nullable();
             $table->string('guardian_name')->nullable();
             $table->string('guardian_contact_number')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
             $table->index(['full_name_first', 'full_name_last']);
         });

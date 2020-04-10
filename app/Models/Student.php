@@ -28,11 +28,15 @@ class Student extends Model
         'gender',
         'guardian_name',
         'guardian_contact_number',
-        'user_id',
     ];
 
     public function class_sections()
     {
         return $this->hasMany('App\Models\SectionStudent');
+    }
+
+    public function user()
+    {
+        return $this->morphOne('App\Models\User','userable');
     }
 }

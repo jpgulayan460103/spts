@@ -43,4 +43,9 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($value);
     }
+
+    public function userable()
+    {
+        return $this->morphTo();
+    }
 }

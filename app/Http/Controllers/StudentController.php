@@ -44,6 +44,7 @@ class StudentController extends Controller
     public function store(StudentCreateRequest $request)
     {
         $student = Student::create($request->all());
+        (new StudentRepository)->createUser($student);
         return [
             'students' => fractal($student, new StudentTransformer)->toArray()
         ];
@@ -55,9 +56,9 @@ class StudentController extends Controller
      * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function show(Student $student)
+    public function show(Student $student, $id)
     {
-        //
+        return $student->whereId($id)->with('user')->first();
     }
 
     /**

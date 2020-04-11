@@ -32,7 +32,12 @@ class TeacherRepository
             }
         }
         $this->query->orderBy('full_name_last');
-        $this->query = $this->query->paginate($this->defaultPaginate);
+        if(request()->has('getall') && request('getall') == "1"){
+            $this->query = $this->query->get();
+        }else{
+            
+            $this->query = $this->query->paginate($this->defaultPaginate);
+        }
         return $this->query;
     }
 

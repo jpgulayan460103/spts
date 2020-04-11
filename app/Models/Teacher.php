@@ -32,4 +32,9 @@ class Teacher extends Model
     {
         return $this->morphOne('App\Models\User','userable');
     }
+
+    public function class_sections()
+    {
+        return $this->hasMany('App\Models\ClassSection');
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Transformers;
 
 use League\Fractal\TransformerAbstract;
 use App\Transformers\TrackTransformer;
+use App\Transformers\TeacherTransformer;
 use App\Transformers\SectionStudentTransformer;
 
 class ClassSectionTransformer extends TransformerAbstract
@@ -14,7 +15,8 @@ class ClassSectionTransformer extends TransformerAbstract
      * @var array
      */
     protected $defaultIncludes = [
-        'track'
+        'track',
+        'teacher'
     ];
     
     /**
@@ -37,7 +39,7 @@ class ClassSectionTransformer extends TransformerAbstract
             'id' => $table->id,
             'section_name' => $table->section_name,
             'track_id' => $table->track_id,
-            'section_adviser' => $table->section_adviser,
+            'teacher_id' => $table->teacher_id,
             'grade_level' => $table->grade_level,
             'school_year' => $table->school_year,
         ];
@@ -50,5 +52,9 @@ class ClassSectionTransformer extends TransformerAbstract
     public function includeStudents($table)
     {
         return $this->collection($table->students, new SectionStudentTransformer);
+    }
+    public function includeTeacher($table)
+    {
+        return $this->item($table->teacher, new TeacherTransformer);
     }
 }

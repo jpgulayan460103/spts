@@ -17,10 +17,11 @@ class CreateClassSectionsTable extends Migration
             $table->bigIncrements('id');
             $table->string('section_name');
             $table->string('school_year');
+            $table->unsignedBigInteger('teacher_id')->nullable();
             $table->unsignedBigInteger('track_id')->nullable();
-            $table->string('section_adviser');
             $table->string('grade_level');
             $table->timestamps();
+            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('set null');
             $table->foreign('track_id')->references('id')->on('tracks')->onDelete('cascade');
         });
     }

@@ -9,7 +9,7 @@ class ClassSection extends Model
     protected $fillable = [
         'section_name',
         'track_id',
-        'section_adviser',
+        'teacher_id',
         'grade_level',
         'school_year',
     ];
@@ -25,5 +25,9 @@ class ClassSection extends Model
             ->join('students','students.id','=','section_students.student_id')
             ->select('section_students.*')
             ->orderBy('students.full_name_last');
+    }
+    public function teacher()
+    {
+        return $this->belongsTo('App\Models\Teacher');
     }
 }

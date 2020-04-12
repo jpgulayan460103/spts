@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Subject;
 
 class ClassSection extends Model
 {
@@ -12,6 +13,8 @@ class ClassSection extends Model
         'teacher_id',
         'grade_level',
         'school_year',
+        'semester_id',
+        'quarter_id',
     ];
 
     public function track()
@@ -20,14 +23,27 @@ class ClassSection extends Model
     }
     public function students()
     {
-        // return $this->hasMany('App\Models\SectionStudent');
-        return $this->hasMany('App\Models\SectionStudent')
-            ->join('students','students.id','=','section_students.student_id')
-            ->select('section_students.*')
-            ->orderBy('students.full_name_last');
+        return $this->belongsToMany('App\Models\Student','section_students','class_section_id','student_id')->orderBy('full_name_last');
     }
     public function teacher()
     {
         return $this->belongsTo('App\Models\Teacher');
+    }
+    public function semester()
+    {
+        return $this->belongsTo('App\Models\Semester');
+    }
+    public function quarter()
+    {
+        return $this->belongsTo('App\Models\Quarter');
+    }
+
+    public function subjects()
+    {
+        return Subject::where([
+            'track_id' => $this->track_id,
+            'semester_id' => $this->semester_id,
+            'grade_level' => $this->grade_level,
+        ])->get();
     }
 }

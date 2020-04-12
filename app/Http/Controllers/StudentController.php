@@ -58,7 +58,7 @@ class StudentController extends Controller
      */
     public function show(Student $student, $id)
     {
-        return $student->whereId($id)->with('user')->first();
+        return $student->whereId($id)->with('class_sections')->first();
     }
 
     /**

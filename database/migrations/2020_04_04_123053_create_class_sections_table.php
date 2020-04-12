@@ -19,10 +19,14 @@ class CreateClassSectionsTable extends Migration
             $table->string('school_year');
             $table->unsignedBigInteger('teacher_id')->nullable();
             $table->unsignedBigInteger('track_id')->nullable();
+            $table->unsignedBigInteger('semester_id')->nullable();
+            $table->unsignedBigInteger('quarter_id')->nullable();
             $table->string('grade_level');
             $table->timestamps();
             $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('set null');
             $table->foreign('track_id')->references('id')->on('tracks')->onDelete('cascade');
+            $table->foreign('semester_id')->references('id')->on('semesters')->onDelete('cascade');
+            $table->foreign('quarter_id')->references('id')->on('quarters')->onDelete('cascade');
         });
     }
 

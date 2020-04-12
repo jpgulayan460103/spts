@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\ClassSection;
 use App\Models\SectionStudent;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use App\Http\Requests\ClassSectionCreateRequest;
 use App\Transformers\ClassSectionTransformer;
 use App\Transformers\SectionStudentTransformer;
 use App\Repositories\ClassSection\ClassSectionRepository;
-
+use DB;
 
 class ClassSectionController extends Controller
 {
@@ -56,9 +57,12 @@ class ClassSectionController extends Controller
      * @param  \App\Models\ClassSection  $classSection
      * @return \Illuminate\Http\Response
      */
-    public function show(ClassSection $classSection)
+    public function show($id)
     {
-        //
+        $class_sections = ClassSection::find($id);
+        return [
+            'class_sections' => fractal($class_sections, new ClassSectionTransformer)->parseIncludes('students, subjects')->toArray()
+        ];
     }
 
     /**
@@ -99,18 +103,10 @@ class ClassSectionController extends Controller
         $class_section->findOrFail($id)->delete();
     }
 
-    public function listStudents($id)
-    {
-        $class_sections = ClassSection::find($id);
-        return [
-            'class_sections' => fractal($class_sections, new ClassSectionTransformer)->parseIncludes('students.student')->toArray()
-        ];
-    }
-
     public function removeStudent($class_section_id, $id)
     {
         SectionStudent::whereStudentId($id)->whereClassSectionId($class_section_id)->delete();
-        return $this->listStudents($class_section_id);
+        return $this->show($class_section_id);
     }
     
     public function addStudent(Request $request, $class_section_id)
@@ -128,6 +124,6 @@ class ClassSectionController extends Controller
             ];
             return response($response, 422);
         }
-        return $this->listStudents($class_section_id);
+        return $this->show($class_section_id);
     }
 }

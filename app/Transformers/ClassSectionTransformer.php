@@ -5,7 +5,10 @@ namespace App\Transformers;
 use League\Fractal\TransformerAbstract;
 use App\Transformers\TrackTransformer;
 use App\Transformers\TeacherTransformer;
-use App\Transformers\SectionStudentTransformer;
+use App\Transformers\SemesterTransformer;
+use App\Transformers\QuarterTransformer;
+use App\Transformers\StudentTransformer;
+use App\Transformers\SubjectTransformer;
 
 class ClassSectionTransformer extends TransformerAbstract
 {
@@ -16,6 +19,8 @@ class ClassSectionTransformer extends TransformerAbstract
      */
     protected $defaultIncludes = [
         'track',
+        'semester',
+        'quarter',
         'teacher'
     ];
     
@@ -25,7 +30,8 @@ class ClassSectionTransformer extends TransformerAbstract
      * @var array
      */
     protected $availableIncludes = [
-        'students'
+        'students',
+        'subjects'
     ];
     
     /**
@@ -42,6 +48,8 @@ class ClassSectionTransformer extends TransformerAbstract
             'teacher_id' => $table->teacher_id,
             'grade_level' => $table->grade_level,
             'school_year' => $table->school_year,
+            'semester_id' => $table->semester_id,
+            'quarter_id' => $table->quarter_id,
         ];
     }
 
@@ -49,12 +57,24 @@ class ClassSectionTransformer extends TransformerAbstract
     {
         return $this->item($table->track, new TrackTransformer);
     }
+    public function includeSemester($table)
+    {
+        return $this->item($table->semester, new SemesterTransformer);
+    }
+    public function includeQuarter($table)
+    {
+        return $this->item($table->quarter, new QuarterTransformer);
+    }
     public function includeStudents($table)
     {
-        return $this->collection($table->students, new SectionStudentTransformer);
+        return $this->collection($table->students, new StudentTransformer);
     }
     public function includeTeacher($table)
     {
         return $this->item($table->teacher, new TeacherTransformer);
+    }
+    public function includeSubjects($table)
+    {
+        return $this->collection($table->subjects(), new SubjectTransformer);
     }
 }

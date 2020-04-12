@@ -32,7 +32,7 @@ class Student extends Model
 
     public function class_sections()
     {
-        return $this->hasMany('App\Models\SectionStudent');
+        return $this->belongsToMany('App\Models\ClassSection','section_students','student_id','class_section_id');
     }
 
     public function user()

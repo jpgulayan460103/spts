@@ -29,6 +29,8 @@ class ClassSectionCreateRequest extends FormRequest
             'track_id' => 'required|max:191',
             'teacher_id' => 'required|max:191',
             'grade_level' => 'required|max:191',
+            'semester_id' => 'required|max:191',
+            'quarter_id' => 'required|max:191',
         ];
     }
 }

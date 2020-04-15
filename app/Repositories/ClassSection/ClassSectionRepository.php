@@ -19,6 +19,7 @@ class ClassSectionRepository
         if (!$this->query) {
             $this->query = ClassSection::query();
         }
+        $this->query->with('track','semester','quarter','teacher');
         if(request()->has('query')){
             $key = request('query');
             if ($key){

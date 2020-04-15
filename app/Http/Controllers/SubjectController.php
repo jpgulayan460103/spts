@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subject;
+use App\Models\SubjectCategory;
 use Illuminate\Http\Request;
 use App\Transformers\SubjectTransformer;
+use App\Transformers\SubjectCategoryTransformer;
 use App\Repositories\Subject\SubjectRepository;
 
 class SubjectController extends Controller
@@ -93,5 +95,12 @@ class SubjectController extends Controller
     public function destroy(Subject $subject, $id)
     {
         $subject->findOrFail($id)->delete();
+    }
+
+    public function categories()
+    {
+        return [
+            'subject-categories' => fractal(SubjectCategory::all(), new SubjectCategoryTransformer)->toArray()
+        ];
     }
 }

@@ -3,9 +3,8 @@
 namespace App\Transformers;
 
 use League\Fractal\TransformerAbstract;
-use App\Transformers\GradingSystemTransformer;
 
-class SubjectCategoryTransformer extends TransformerAbstract
+class GradingSystemTransformer extends TransformerAbstract
 {
     /**
      * List of resources to automatically include
@@ -13,7 +12,7 @@ class SubjectCategoryTransformer extends TransformerAbstract
      * @var array
      */
     protected $defaultIncludes = [
-        'grading_systems'
+        //
     ];
     
     /**
@@ -34,14 +33,9 @@ class SubjectCategoryTransformer extends TransformerAbstract
     {
         return [
             'id' => $table->id,
-            'name' => $table->name,
+            'category' => $table->category,
+            'grading_system' => $table->grading_system,
+            'subject_category_id' => $table->subject_category_id,
         ];
-    }
-
-    public function includeGradingSystems($table)
-    {
-        if($table->grading_systems){
-            return $this->collection($table->grading_systems, new GradingSystemTransformer);
-        }
     }
 }

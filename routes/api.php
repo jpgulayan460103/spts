@@ -43,12 +43,17 @@ Route::group($route_params, function () {
         Route::get('/', 'ClassSectionController@index')->name('api.class-sections.index');
         Route::post('/', 'ClassSectionController@store')->name('api.class-sections.store');
         Route::get('/{id}', 'ClassSectionController@show')->name('api.class-sections.show');
-        Route::get('/{id}/students', 'ClassSectionController@listStudents')->name('api.class-sections.students.list');
-        Route::post('/{section_class_id}/students', 'ClassSectionController@addStudent')->name('api.class-sections.students.add');
-        Route::put('/{section_class_id}/students/{id}', 'ClassSectionController@removeStudent')->name('api.class-sections.students.remove');
-        Route::get('/{section_class_id}/subjects', 'ClassSectionController@listSubjects')->name('api.class-sections.subjects.list');
         Route::put('/{id}', 'ClassSectionController@update')->name('api.class-sections.update');
         Route::delete('/{id}', 'ClassSectionController@destroy')->name('api.class-sections.destroy');
+
+        Route::get('/{section_class_id}/students', 'ClassSectionController@listStudents')->name('api.class-sections.students.list');
+        Route::post('/{section_class_id}/students', 'ClassSectionController@addStudent')->name('api.class-sections.students.add');
+        Route::put('/{section_class_id}/students/{student_id}', 'ClassSectionController@removeStudent')->name('api.class-sections.students.remove');
+        
+        Route::get('/{section_class_id}/subjects', 'ClassSectionController@listSubjects')->name('api.class-sections.subjects.list');
+        Route::get('/{section_class_id}/subjects/{subject_id}/score-items', 'ScoreItemController@store')->name('api.class-sections.subjects.score-items.list');
+        Route::post('/{section_class_id}/subjects/{subject_id}/score-items', 'ScoreItemController@update')->name('api.class-sections.subjects.score-items.add');
+        Route::delete('/{section_class_id}/subjects/{subject_id}/score-items/{score_item_id}', 'ScoreItemController@destroy')->name('api.class-sections.subjects.score-items.delete');
     });
     Route::group(['prefix' => '/subjects'], function () {
         Route::get('/', 'SubjectController@index')->name('api.subjects.index');
@@ -64,7 +69,15 @@ Route::group($route_params, function () {
         Route::put('/{id}', 'TeacherController@update')->name('api.teachers.update');
         Route::delete('/{id}', 'TeacherController@destroy')->name('api.teachers.destroy');
     });
+    Route::group(['prefix' => '/score-items'], function () {
+        Route::get('/', 'ScoreItemController@index')->name('api.score-items.index');
+        Route::post('/', 'ScoreItemController@store')->name('api.score-items.store');
+        Route::get('/{id}', 'ScoreItemController@show')->name('api.score-items.show');
+        Route::put('/{id}', 'ScoreItemController@update')->name('api.score-items.update');
+        Route::delete('/{id}', 'ScoreItemController@destroy')->name('api.score-items.destroy');
+    });
     Route::get('/tracks', 'TrackController@index')->name('api.tracks.index');
     Route::get('/quarters', 'QuarterController@index')->name('api.quarter.index');
     Route::get('/semesters', 'SemesterController@index')->name('api.semesters.index');
+    Route::get('/subject-categories', 'SubjectController@categories')->name('api.subject-categories.index');
 });

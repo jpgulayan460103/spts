@@ -6,6 +6,9 @@ use App\Models\ScoreItem;
 use App\Models\Subject;
 use App\Models\Score;
 use Illuminate\Http\Request;
+use App\Transformers\SubjectTransformer;
+use App\Transformers\ScoreTransformer;
+use App\Transformers\ScoreItemTransformer;
 
 class ScoreItemController extends Controller
 {
@@ -32,12 +35,15 @@ class ScoreItemController extends Controller
                 'class_section_id' => $class_section_id,
                 'subject_id' => $subject_id,
             ])->get();
+            $subject = fractal($subject, new SubjectTransformer)->parseIncludes('subject_category.grading_systems')->toArray();
+            $scores = fractal($scores, new ScoreTransformer)->toArray();
         }
         $score_items = $score_items->orderBy('grading_system_id')->get();
+        $score_items = fractal($score_items, new ScoreItemTransformer)->toArray();
         return [
-            'score_items' => $score_items,
+            'score_items' => (isset($score_items['data']) ? $score_items['data']: $score_items),
             'grading_systems' => $grading_systems,
-            'scores' => $scores,
+            'scores' => (isset($scores['data']) ? $scores['data']: $scores),
         ];
     }
 

@@ -39,4 +39,9 @@ class Student extends Model
     {
         return $this->morphOne('App\Models\User','userable');
     }
+
+    public function scores()
+    {
+        return $this->hasMany('App\Models\Score');
+    }
 }

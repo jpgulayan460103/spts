@@ -35,7 +35,25 @@ class ScoreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Score::updateOrCreate();
+        $score = Score::where([
+            'subject_id' => $request->subject_id,
+            'student_id' => $request->student_id,
+            'class_section_id' => $request->class_section_id,
+            'score_item_id' => $request->score_item_id,
+        ])->first();
+        if(!$score){
+            Score::create($request->all());
+        }else{
+            $score->update($request->all());
+        }
+        return [
+            'scores' => Score::where([
+                'subject_id' => $request->subject_id,
+                'student_id' => $request->student_id,
+                'class_section_id' => $request->class_section_id,
+            ])->get()
+        ];
     }
 
     /**

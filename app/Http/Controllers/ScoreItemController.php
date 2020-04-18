@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ScoreItem;
+use App\Models\Subject;
+use App\Models\Score;
 use Illuminate\Http\Request;
 
 class ScoreItemController extends Controller
@@ -12,9 +14,31 @@ class ScoreItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, $class_section_id,$subject_id)
     {
-        //
+        $grading_systems = [];
+        $scores = [];
+        $score_items = ScoreItem::where([
+            'class_section_id' => $class_section_id,
+            'subject_id' => $subject_id,
+        ]);
+        if($request->grading_system_id){
+            $grading_system_id = $request->grading_system_id;
+            $score_items->where('grading_system_id',$grading_system_id);
+        }else{
+            $subject = Subject::whereId($subject_id)->with('subject_category.grading_systems')->first();
+            $grading_systems = $subject->subject_category->grading_systems;
+            $scores = Score::where([
+                'class_section_id' => $class_section_id,
+                'subject_id' => $subject_id,
+            ])->get();
+        }
+        $score_items = $score_items->orderBy('grading_system_id')->get();
+        return [
+            'score_items' => $score_items,
+            'grading_systems' => $grading_systems,
+            'scores' => $scores,
+        ];
     }
 
     /**
@@ -35,7 +59,14 @@ class ScoreItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'subject_id' => 'required|numeric',
+            'subject_category_id' => 'required|numeric',
+            'class_section_id' => 'required|numeric',
+            'grading_system_id' => 'required|numeric',
+            'item' => 'required|numeric|max:999',
+        ]);
+        ScoreItem::create($request->all());
     }
 
     /**
@@ -78,8 +109,8 @@ class ScoreItemController extends Controller
      * @param  \App\Models\ScoreItem  $scoreItem
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ScoreItem $scoreItem)
+    public function destroy(ScoreItem $scoreItem, $class_section_id, $subject_id, $id)
     {
-        //
+        $scoreItem->findOrFail($id)->delete();
     }
 }

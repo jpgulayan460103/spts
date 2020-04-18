@@ -45,6 +45,7 @@ class SubjectTransformer extends TransformerAbstract
             'quarter_id' => $table->quarter_id,
             'semester_id' => $table->semester_id,
             'teacher_id' => $table->teacher_id,
+            'subject_category_id' => $table->subject_category_id,
             'subject_description' => $table->subject_description,
             'school_year' => $table->school_year,
             'offer_code' => $table->offer_code,

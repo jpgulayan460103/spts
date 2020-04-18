@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\TransmutedGrade;
+use App\Models\TransmutedGrade;
 use Illuminate\Http\Request;
 
 class TransmutedGradeController extends Controller
@@ -14,7 +14,9 @@ class TransmutedGradeController extends Controller
      */
     public function index()
     {
-        return TransmutedGrade::all();
+        return [
+            'transmuted_grades' => TransmutedGrade::all(),
+        ];
     }
 
     /**

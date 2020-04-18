@@ -10,6 +10,17 @@ class ScoreItem extends Model
         'subject_id',
         'subject_category_id',
         'class_section_id',
+        'grading_system_id',
         'item',
     ];
+
+    public function scores()
+    {
+        return $this->hasMany('App\Models\Score');
+    }
+    
+    public function students()
+    {
+        return $this->hasMany('App\Models\Student');
+    }
 }

@@ -32,10 +32,10 @@ class TeacherRepository
             }
         }
         $this->query->orderBy('full_name_last');
+        $this->query->with('user');
         if(request()->has('getall') && request('getall') == "1"){
             $this->query = $this->query->get();
         }else{
-            
             $this->query = $this->query->paginate($this->defaultPaginate);
         }
         return $this->query;
@@ -49,5 +49,17 @@ class TeacherRepository
             'password' => request('password')
         ]);
         $user->assignRole('teacher');
+    }
+
+    public function updateUser(Teacher $teacher)
+    {
+        $data = [
+            'name' => request('username'),
+            'username' => request('username')
+        ];
+        if(request()->has('password')){
+            $data['password'] = bcrypt(request('password'));
+        }
+        $user = $teacher->user()->update($data);
     }
 }

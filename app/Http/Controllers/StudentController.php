@@ -82,6 +82,7 @@ class StudentController extends Controller
     public function update(StudentUpdateRequest $request, Student $student, $id)
     {
         $student = $student->findOrFail($id);
+        (new StudentRepository)->updateUser($student);
         $student->update($request->all());
         return [
             'students' => fractal($student, new StudentTransformer)->toArray()

@@ -4,6 +4,7 @@ namespace App\Transformers;
 
 use League\Fractal\TransformerAbstract;
 use App\Transformers\ClassSectionTransformer;
+use App\Transformers\UserTransformer;
 
 class StudentTransformer extends TransformerAbstract
 {
@@ -13,7 +14,7 @@ class StudentTransformer extends TransformerAbstract
      * @var array
      */
     protected $defaultIncludes = [
-        //
+        'user',
     ];
     
     /**
@@ -22,7 +23,6 @@ class StudentTransformer extends TransformerAbstract
      * @var array
      */
     protected $availableIncludes = [
-        //
     ];
     
     /**
@@ -51,6 +51,12 @@ class StudentTransformer extends TransformerAbstract
     {
         if($table->class_sections){
             return $this->collection($table->class_sections, new ClassSectionTransformer);
+        }
+    }
+    public function includeUser($table)
+    {
+        if($table->user){
+            return $this->item($table->user, new UserTransformer);
         }
     }
 }

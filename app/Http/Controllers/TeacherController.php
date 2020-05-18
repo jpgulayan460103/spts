@@ -78,10 +78,11 @@ class TeacherController extends Controller
      * @param  \App\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function update(TeacherUpdateRequest $request, Teacher $teacher)
+    public function update(TeacherUpdateRequest $request, Teacher $teacher, $id)
     {
         $teacher = $teacher->findOrFail($id);
         $teacher->update($request->all());
+        (new TeacherRepository)->updateUser($teacher);
         return [
             'teachers' => fractal($teacher, new TeacherTransformer)->toArray()
         ];

@@ -32,6 +32,7 @@ class StudentRepository
             }
         }
         $this->query->orderBy('full_name_last');
+        $this->query->with('user');
         $this->query = $this->query->paginate($this->defaultPaginate);
         return $this->query;
     }
@@ -44,5 +45,16 @@ class StudentRepository
             'password' => request('password')
         ]);
         $user->assignRole('student');
+    }
+    public function updateUser(Student $student)
+    {
+        $data = [
+            'name' => request('username'),
+            'username' => request('username')
+        ];
+        if(request()->has('password')){
+            $data['password'] = bcrypt(request('password'));
+        }
+        $user = $student->user()->update($data);
     }
 }

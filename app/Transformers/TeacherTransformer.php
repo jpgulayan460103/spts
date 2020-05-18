@@ -3,6 +3,7 @@
 namespace App\Transformers;
 
 use League\Fractal\TransformerAbstract;
+use App\Transformers\UserTransformer;
 
 class TeacherTransformer extends TransformerAbstract
 {
@@ -12,7 +13,7 @@ class TeacherTransformer extends TransformerAbstract
      * @var array
      */
     protected $defaultIncludes = [
-        //
+        'user',
     ];
     
     /**
@@ -21,7 +22,6 @@ class TeacherTransformer extends TransformerAbstract
      * @var array
      */
     protected $availableIncludes = [
-        //
     ];
     
     /**
@@ -42,5 +42,11 @@ class TeacherTransformer extends TransformerAbstract
             'ext_name' => $table->ext_name,
             'gender' => $table->gender,
         ];
+    }
+    public function includeUser($table)
+    {
+        if($table->user){
+            return $this->item($table->user, new UserTransformer);
+        }
     }
 }

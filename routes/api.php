@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/login','AuthController@login');
 
 if(config('app.env') == "production"){
-    $route_params = ['middleware' => 'api:auth'];
+    $route_params = ['middleware' => 'auth:api'];
 }else{
     $route_params = [];
 }

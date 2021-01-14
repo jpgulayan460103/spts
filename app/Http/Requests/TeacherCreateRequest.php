@@ -27,8 +27,8 @@ class TeacherCreateRequest extends FormRequest
         return [
             'last_name' => ['required','max:191', new NameRule],
             'first_name' => ['required','max:191', new NameRule],
-            'middle_name' => ['max:191', new NameRule],
-            'ext_name' => ['max:191', new NameRule],
+            // 'middle_name' => ['max:191', new NameRule],
+            // 'ext_name' => ['max:191', new NameRule],
             'gender' => ['required','max:191', new NameRule],
             'teacher_id_number' => ['required','unique:teachers,teacher_id_number'],
             'username' => ['required','unique:users,username'],

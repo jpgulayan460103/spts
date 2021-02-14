@@ -12,6 +12,7 @@ class ScoreItem extends Model
         'class_section_id',
         'grading_system_id',
         'item',
+        'quiz_name',
     ];
 
     public function scores()

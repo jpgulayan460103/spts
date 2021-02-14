@@ -71,6 +71,7 @@ class ScoreItemController extends Controller
             'class_section_id' => 'required|numeric',
             'grading_system_id' => 'required|numeric',
             'item' => 'required|numeric|max:999',
+            'quiz_name' => 'required',
         ]);
         ScoreItem::create($request->all());
     }

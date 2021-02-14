@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Score;
 use Illuminate\Http\Request;
+use App\Http\Requests\ScoreItemRequest;
 
 class ScoreController extends Controller
 {
@@ -33,7 +34,7 @@ class ScoreController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ScoreItemRequest $request)
     {
         // Score::updateOrCreate();
         $score = Score::where([

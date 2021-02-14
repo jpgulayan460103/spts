@@ -59,7 +59,7 @@ class ClassSectionController extends Controller
      */
     public function show($id)
     {
-        $class_sections = ClassSection::find($id)
+        $class_sections = ClassSection::whereId($id)
         ->with('track','semester','quarter','teacher')
         ->first();
         return [

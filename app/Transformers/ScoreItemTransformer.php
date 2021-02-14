@@ -38,6 +38,7 @@ class ScoreItemTransformer extends TransformerAbstract
             'class_section_id' => $table->class_section_id,
             'grading_system_id' => $table->grading_system_id,
             'item' => (integer)$table->item,
+            'quiz_name' => $table->quiz_name,
         ];
     }
 }

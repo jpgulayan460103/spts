@@ -42,6 +42,7 @@ class CreateScoreItemsTable extends Migration
     {
         Schema::table('scores', function (Blueprint $table) {
             $table->dropForeign(['score_item_id']);
+            $table->dropColumn(['score_item_id']);
         });
         Schema::dropIfExists('score_items');
     }

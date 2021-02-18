@@ -77,6 +77,15 @@ Route::group($route_params, function () {
         Route::put('/{id}', 'ScoreItemController@update')->name('api.score-items.update');
         Route::delete('/{id}', 'ScoreItemController@destroy')->name('api.score-items.destroy');
     });
+
+    Route::group(['prefix' => '/units'], function () {
+        Route::get('/', 'UnitController@index')->name('api.units.index');
+        Route::post('/', 'UnitController@store')->name('api.units.store');
+        Route::get('/{id}', 'UnitController@show')->name('api.units.show');
+        Route::put('/{id}', 'UnitController@update')->name('api.units.update');
+        Route::delete('/{id}', 'UnitController@destroy')->name('api.units.destroy');
+    });
+
     Route::get('/tracks', 'TrackController@index')->name('api.tracks.index');
     Route::get('/quarters', 'QuarterController@index')->name('api.quarter.index');
     Route::get('/semesters', 'SemesterController@index')->name('api.semesters.index');

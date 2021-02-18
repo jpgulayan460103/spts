@@ -24,6 +24,7 @@ class ScoreItemController extends Controller
         $score_items = ScoreItem::where([
             'class_section_id' => $class_section_id,
             'subject_id' => $subject_id,
+            'unit_id' => $request->unit_id,
         ]);
         if($request->grading_system_id){
             $grading_system_id = $request->grading_system_id;
@@ -34,6 +35,7 @@ class ScoreItemController extends Controller
             $scores = Score::where([
                 'class_section_id' => $class_section_id,
                 'subject_id' => $subject_id,
+                'unit_id' => $request->unit_id,
             ])->get();
             $subject = fractal($subject, new SubjectTransformer)->parseIncludes('subject_category.grading_systems')->toArray();
             $scores = fractal($scores, new ScoreTransformer)->toArray();

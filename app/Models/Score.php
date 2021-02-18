@@ -14,6 +14,7 @@ class Score extends Model
         'grading_system_id',
         'grade_id',
         'score',
+        'unit_id',
     ];
 
     public function score_item()

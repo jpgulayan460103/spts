@@ -16,9 +16,11 @@ class CreateUnitsTable extends Migration
         Schema::create('units', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('class_section_id')->nullable();
+            $table->unsignedBigInteger('subject_id')->nullable();
             $table->string('unit_name')->nullable();
             $table->timestamps();
             $table->foreign('class_section_id')->references('id')->on('class_sections')->onDelete('cascade');
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
         });
 
         Schema::table('score_items', function (Blueprint $table) {

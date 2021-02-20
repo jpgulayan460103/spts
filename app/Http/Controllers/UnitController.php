@@ -12,9 +12,14 @@ class UnitController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($class_section_id)
+    public function index(Request $request)
     {
-        //
+        $class_section_id = $request->class_section_id;
+        $subject_id = $request->subject_id;
+        $unit = Unit::where('class_section_id', $class_section_id)->where('subject_id', $subject_id)->with('subject')->get();
+        return [
+            'units' => $unit
+        ];
     }
 
     /**
@@ -82,8 +87,8 @@ class UnitController extends Controller
      * @param  \App\Models\Unit  $unit
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Unit $unit)
+    public function destroy(Unit $unit, $id)
     {
-        //
+        $unit::find($id)->delete();
     }
 }

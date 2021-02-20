@@ -8,6 +8,12 @@ class Unit extends Model
 {
     protected $fillable = [
         'class_section_id',
-        'unit_name'
+        'unit_name',
+        'subject_id'
     ];
+
+    public function subject()
+    {
+        return $this->belongsTo('App\Models\Subject');
+    }
 }

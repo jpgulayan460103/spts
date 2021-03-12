@@ -54,7 +54,8 @@ Route::group($route_params, function () {
         Route::post('/{class_section_id}/subjects/{subject_id}/score-items', 'ScoreItemController@store')->name('api.class-sections.subjects.score-items.add');
         Route::delete('/{class_section_id}/subjects/{subject_id}/score-items/{score_item_id}', 'ScoreItemController@destroy')->name('api.class-sections.subjects.score-items.delete');
 
-        Route::post('/{class_section_id}/subjects/{subject_id}/score-items/{score_item_id}', 'ScoreController@store')->name('api.class-sections.subjects.score.store');
+        Route::post('/{class_section_id}/subjects/{subject_id}/score-items/{score_item_id}/score', 'ScoreController@store')->name('api.class-sections.subjects.score.store');
+        Route::post('/{class_section_id}/subjects/{subject_id}/score-items/{score_item_id}/score-multiple', 'ScoreController@storeMultiple')->name('api.class-sections.subjects.score.store-multiple');
     });
     Route::group(['prefix' => '/subjects'], function () {
         Route::get('/', 'SubjectController@index')->name('api.subjects.index');

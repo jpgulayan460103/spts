@@ -3,6 +3,7 @@
 namespace App\Transformers;
 
 use League\Fractal\TransformerAbstract;
+use App\Transformers\ScoreItemTransformer;
 
 class ScoreTransformer extends TransformerAbstract
 {
@@ -21,7 +22,7 @@ class ScoreTransformer extends TransformerAbstract
      * @var array
      */
     protected $availableIncludes = [
-        //
+        'score_item'
     ];
     
     /**
@@ -41,5 +42,12 @@ class ScoreTransformer extends TransformerAbstract
             'grade_id' => $table->grade_id,
             'score' => (integer)$table->score,
         ];
+    }
+
+    public function includeScoreItem($table)
+    {
+        if($table->score_item){
+            return $this->item($table->score_item, new ScoreItemTransformer);
+        }
     }
 }

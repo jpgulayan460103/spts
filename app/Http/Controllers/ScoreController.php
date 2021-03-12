@@ -68,6 +68,25 @@ class ScoreController extends Controller
         //
     }
 
+    public function storeMultiple(Request $request)
+    {
+        if($request->scores != array()){
+            foreach ($request->scores as $scoreInput) {
+                $score = Score::where([
+                    'subject_id' => $scoreInput['subject_id'],
+                    'student_id' => $scoreInput['student_id'],
+                    'class_section_id' => $scoreInput['class_section_id'],
+                    'score_item_id' => $scoreInput['score_item_id'],
+                ])->first();
+                if(!$score){
+                    Score::create($scoreInput);
+                }else{
+                    $score->update($scoreInput);
+                }
+            }
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
